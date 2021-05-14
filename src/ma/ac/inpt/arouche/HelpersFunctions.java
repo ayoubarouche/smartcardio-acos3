@@ -11,4 +11,11 @@ public class HelpersFunctions {
 		return sb.toString();
 
 	}
+	
+	public static void writeStringToFile() {
+		
+	}
+	public static void generate_public_private_key() {
+		
+	}
 }

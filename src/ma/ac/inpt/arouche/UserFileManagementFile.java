@@ -15,8 +15,9 @@ public class UserFileManagementFile {
 	}
 	public String read_record_user_file_management(byte number_of_file) throws Exception {
 		byte[] read_command= Acos3Commands.get_read_file_byte_code(user_file_management_file);
-		read_command[4] = (byte) (0x06 * number_of_file);
-		CommandAPDU submit_read_record = new CommandAPDU(read_command);
+		read_command[4] = (byte) (0x06);
+		read_command[2] = (byte)number_of_file;
+ 		CommandAPDU submit_read_record = new CommandAPDU(read_command);
 		
 		ResponseAPDU reponse = channel.transmit(submit_read_record);
 		if(reponse.getSW()== 0x9000) {
@@ -44,9 +45,9 @@ public class UserFileManagementFile {
 		}
 		
 	}
-	public void create_a_new_file_definition(byte record_length, byte number_of_records,
+	public void create_or_update_the_file_definition(byte which_record, byte record_length, byte number_of_records,
 			byte read_security_attribute, byte write_security_attribute, byte[] file_identifier)throws Exception{
-			CommandAPDU submit_create = new CommandAPDU(Acos3Commands.get_create_new_file_in_user_file_management_byte_code(record_length , number_of_records , read_security_attribute , write_security_attribute , file_identifier));
+			CommandAPDU submit_create = new CommandAPDU(Acos3Commands.get_create_new_file_in_user_file_management_byte_code(which_record,record_length , number_of_records , read_security_attribute , write_security_attribute , file_identifier));
 			ResponseAPDU reponse = channel.transmit(submit_create);
 			if(reponse.getSW()== 0x9000) {
 				Acos3.sw_result_code = Integer.toHexString(reponse.getSW());

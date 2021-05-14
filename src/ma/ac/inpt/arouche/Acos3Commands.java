@@ -21,6 +21,8 @@ public class Acos3Commands {
 		case ACCOUNT_SECURITY_FILE:
 			break;
 		case SECURITY_FILE:
+			SELECT_APDU_FILE[5] = (byte) 0xFF;
+			SELECT_APDU_FILE[6] = 0x03;
 			break;
 		case USER_FILE_DATA_AREA:
 			break;
@@ -43,6 +45,7 @@ public class Acos3Commands {
 		case ACCOUNT_SECURITY_FILE:
 			break;
 		case SECURITY_FILE:
+			READ_APDU_FILE[4] = (byte) (0x08);
 			break;
 		case USER_FILE_DATA_AREA:
 			break;
@@ -57,9 +60,9 @@ public class Acos3Commands {
 		return CREATE_APDU_N_FILES;
 	}
 
-	public static byte[] get_create_new_file_in_user_file_management_byte_code(byte record_length, byte number_of_records,
+	public static byte[] get_create_new_file_in_user_file_management_byte_code(byte record_numero,byte record_length, byte number_of_records,
 			byte read_security_attribute, byte write_security_attribute, byte[] file_identifier) {
-		
+			ADD_THE_FILE_ATTRIBUTES[2]  = record_numero;
 			ADD_THE_FILE_ATTRIBUTES[5]  = record_length ; 
 			ADD_THE_FILE_ATTRIBUTES[6]  = number_of_records ; 
 			ADD_THE_FILE_ATTRIBUTES[7]  = read_security_attribute ;
@@ -83,4 +86,5 @@ public class Acos3Commands {
 		
 		return write_record;
 	}
+
 }

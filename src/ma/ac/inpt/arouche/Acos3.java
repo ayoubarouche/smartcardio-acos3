@@ -14,6 +14,7 @@ public class Acos3 {
 	private static byte[] IC_APDU = { (byte) 0x80, 0x20, 0x07, 0x00, 0x08, 0x41, 0x43, 0x4F, 0x53, 0x54, 0x45, 0x53,
 			0x54 };
 	private Card cardacos3;
+	private static byte[] IC_SUBMIT_PIN = {(byte)0x80,(byte)0x20,(byte)0x06,(byte)0x00,(byte)0x08,0x00, 0x00, 0x00, 0X00, 0x00, 0x00, 0x00, 0x00};
 
 	 static CardChannel channel; // la chaine pour communiquer avec la carte
 
@@ -53,6 +54,24 @@ public class Acos3 {
 			throw new Acos3Exception(" trying to submit the issuer code" , Integer.toHexString(reponse.getSW()));
 		
 		}
+	}
+	
+	public  void submit_pin_code(String pin) throws Exception {
+		   byte[] pin_binaire = pin.getBytes();
+		   for (int j=0;j<pin_binaire.length;j++)
+			   IC_SUBMIT_PIN[5+j]=pin_binaire[j];
+		   CommandAPDU Submit_IC_code_APDU = new CommandAPDU(IC_SUBMIT_PIN);
+		   ResponseAPDU reponse=channel.transmit(Submit_IC_code_APDU);
+			if(reponse.getSW()== 0x9000) {
+			
+				sw_result_code = Integer.toHexString(reponse.getSW());
+				}
+			
+			else {
+				sw_result_code = Integer.toHexString(reponse.getSW());
+				throw new Acos3Exception(" trying to submit the pin code" , Integer.toHexString(reponse.getSW()));
+			
+			}
 	}
 	public static void clear_card() {
 		

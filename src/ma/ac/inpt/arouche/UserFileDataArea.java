@@ -34,17 +34,18 @@ public class UserFileDataArea {
 
 	}
 
-	public void personna_the_file(String[] file_text) throws Exception {
+	public void personna_the_file(int nombre_record, int write_record_length,byte record_length, String[] file_text) throws Exception {
 		int i;
-		for (i = 0; i < file_text.length; i++) {
+		for (i = 0; i < nombre_record; i++) {
 			byte[] nom_b = file_text[i].getBytes();
-			byte[] write_record = new byte[25];
+			byte[] write_record = new byte[write_record_length];
 			write_record[0] = (byte) 0x80;
 			write_record[1] = (byte) 0xD2;
 			write_record[2] = (byte) i;
 			write_record[3] = (byte) 0x00;
-			write_record[4] = (byte) 0x14;
+			write_record[4] = (byte) record_length;
 			for (int j = 0; j < nom_b.length; j++) {
+				
 				write_record[5 + j] = nom_b[j];
 
 			}
@@ -62,7 +63,7 @@ public class UserFileDataArea {
 		}
 
 	}
-	public String read_record(byte record, byte number_of_bytes) throws Exception {
+	public String read_record(byte record, byte number_of_bytes ) throws Exception {
 		byte[] read_record = { (byte) 0x80, (byte) 0xB2, (byte) record, 0x00, (byte) number_of_bytes };
 		CommandAPDU write_apdu = new CommandAPDU(read_record);
 		ResponseAPDU reponse = channel.transmit(write_apdu);
@@ -76,4 +77,6 @@ public class UserFileDataArea {
 			throw new Acos3Exception("reading the file", Integer.toHexString(reponse.getSW()));
 		}
 	}
+	
+	
 }
