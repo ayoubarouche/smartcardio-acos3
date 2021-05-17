@@ -34,11 +34,11 @@ public class UserFileDataArea {
 
 	}
 
-	public void personna_the_file(int nombre_record, int write_record_length,byte record_length, String[] file_text) throws Exception {
+	public void personna_the_file(int nombre_record, int record_length, String[] file_text) throws Exception {
 		int i;
 		for (i = 0; i < nombre_record; i++) {
 			byte[] nom_b = file_text[i].getBytes();
-			byte[] write_record = new byte[write_record_length];
+			byte[] write_record = new byte[record_length+5];
 			write_record[0] = (byte) 0x80;
 			write_record[1] = (byte) 0xD2;
 			write_record[2] = (byte) i;
