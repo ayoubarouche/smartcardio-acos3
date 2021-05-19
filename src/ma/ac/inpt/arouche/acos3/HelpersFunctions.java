@@ -1,7 +1,7 @@
-package ma.ac.inpt.arouche;
+package ma.ac.inpt.arouche.acos3;
 
 public class HelpersFunctions {
-	
+
 	public static String bytesToHex(byte[] atr) {
 
 		StringBuilder sb = new StringBuilder();
@@ -11,11 +11,11 @@ public class HelpersFunctions {
 		return sb.toString();
 
 	}
-	
-	public static void writeStringToFile() {
-		
-	}
-	public static void generate_public_private_key() {
-		
+
+	public static String stringArrayToString(String[] array) {
+		String result = "";
+		for (String parcour : array)
+			result += parcour;
+		return result;
 	}
 }

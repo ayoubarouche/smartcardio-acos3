@@ -1,4 +1,4 @@
-package ma.ac.inpt.arouche;
+package ma.ac.inpt.arouche.acos3;
 
 public enum Acos3Files {
 	PERSONNALIZED_FILE , SECURITY_FILE, USER_FILE_DATA_AREA, USER_FILE_MANAGEMENT_FILE , ACCOUNT_FILE, ACCOUNT_SECURITY_FILE

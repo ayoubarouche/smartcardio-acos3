@@ -25,9 +25,11 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import ma.ac.inpt.arouche.acos3.HelpersFunctions;
+
 public class Cryptage {
-	PrivateKey privatekey;
-	PublicKey publickey;
+	private PrivateKey privatekey;
+	private PublicKey publickey;
 
 	public Cryptage() throws NoSuchAlgorithmException {
 		// TODO Auto-generated constructor stub
@@ -38,7 +40,7 @@ public class Cryptage {
 		this.publickey = pair.getPublic();
 	}
 
-	public static PublicKey getPublicKey(String publickey) throws Exception {
+	public PublicKey getPublicKey(String publickey) throws Exception {
 		String publicKeyPEM = publickey;
 
 		byte[] encoded = Base64.getDecoder().decode(publicKeyPEM);
@@ -47,7 +49,7 @@ public class Cryptage {
 		return pubKey;
 	}
 
-	public static PrivateKey getPrivateKey(String privatekey) throws Exception {
+	public PrivateKey getPrivateKey(String privatekey) throws Exception {
 		String privateKeyPEM = privatekey;
 
 		byte[] encoded = Base64.getDecoder().decode(privateKeyPEM);
@@ -57,30 +59,30 @@ public class Cryptage {
 		return privKey;
 	}
 
-	public static byte[] encrypt(String data, String publicKey) throws Exception {
+	public byte[] encrypt(String data, String publicKey) throws Exception {
 		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		cipher.init(Cipher.ENCRYPT_MODE, getPublicKey(publicKey));
 		return cipher.doFinal(data.getBytes());
 	}
 
-	public static byte[] encrypt(String data, PublicKey publicKey) throws Exception {
+	public byte[] encrypt(String data, PublicKey publicKey) throws Exception {
 		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 		return cipher.doFinal(data.getBytes());
 	}
 
-	public static String decrypt(byte[] data, PrivateKey privateKey) throws NoSuchPaddingException,
+	public String decrypt(byte[] data, PrivateKey privateKey) throws NoSuchPaddingException,
 			NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
 		Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		cipher.init(Cipher.DECRYPT_MODE, privateKey);
 		return new String(cipher.doFinal(data));
 	}
 
-	public static String decrypt(String data, String privatekey) throws Exception {
+	public String decrypt(String data, String privatekey) throws Exception {
 		return decrypt(Base64.getDecoder().decode(data.getBytes()), getPrivateKey(privatekey));
 	}
 
-	static String MD5(String input) throws NoSuchAlgorithmException {
+	public static String MD5(String input) throws NoSuchAlgorithmException {
 		MessageDigest mDigest = MessageDigest.getInstance("MD5");
 		byte[] result = mDigest.digest(input.getBytes());
 		return HelpersFunctions.bytesToHex(result);
@@ -93,7 +95,7 @@ public class Cryptage {
 
 
 
-	public static String read_public_key_from_generated_file() {
+	public String read_public_key_from_generated_file() {
 		String publickey = "";
 		try {
 			File myObj = new File("./public_key.pem");
@@ -114,7 +116,7 @@ public class Cryptage {
 		publickey = 	publickey.replace("\r\n", "");
 		return publickey;
 	}
-	public static String read_private_key_from_generated_file() {
+	public String read_private_key_from_generated_file() {
 		String privatekey = "";
 		try {
 			File myObj = new File("./private_key.pem");
@@ -135,7 +137,7 @@ public class Cryptage {
 		return privatekey;
 	}
 
-	public static void generate_private_and_public_key(int keySize) throws Exception {
+	public void generate_private_and_public_key_files(int keySize) throws Exception {
 		String line;
 		File myObj = new File("./openssl/openssl.exe");
 		String[] commands = { "cmd /c " + myObj.getAbsolutePath() + " genrsa -out rsa_private_text.pem " + keySize , 

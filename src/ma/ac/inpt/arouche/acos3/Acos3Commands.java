@@ -1,4 +1,4 @@
-package ma.ac.inpt.arouche;
+package ma.ac.inpt.arouche.acos3;
 
 public class Acos3Commands {
 	private static byte[] SELECT_APDU_FILE = { (byte) 0x80, (byte) 0xA4, 0x00, 0x00, 0x02, (byte) 0xFF, 0x00 };

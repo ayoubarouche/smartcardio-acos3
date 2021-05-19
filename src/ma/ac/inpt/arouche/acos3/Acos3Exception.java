@@ -1,4 +1,4 @@
-package ma.ac.inpt.arouche;
+package ma.ac.inpt.arouche.acos3;
 
 public class Acos3Exception extends Exception{
 	public Acos3Exception(String what_you_wanted_to_do , String erreur_code) {
